@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-950 text-white font-sans;
+  background-color: black;
+}
+ 
+
+#heading {
+  overflow: hidden;
+  border-right: 0.15em solid white;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+  width: 22ch; 
+  animation: 
+    typing 2s steps(22, end), 
+    blink-caret 0.75s step-end infinite;
+  color: white;
+  text-align: center;
+  font-size: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 22ch } 
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}
+
+#home-btn,
+#stored-btn {
+  text-decoration: none;
+  transition-duration: 0.4s;
+  height: 50px;
+  width: 150px;
+  border-radius: 6px;
+  font-size: 24px;
+  text-align: center;
+  display: inline-block;
+  line-height: 50px;
+  background-color: black;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  vertical-align: middle;
+  
+}
+
+#home-btn:hover,
+#stored-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
