@@ -39,9 +39,10 @@ body {
   animation: typing 2s steps(22, end), blink-caret 0.75s step-end infinite;
   color: white;
   font-size: 2.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 50px;
   text-align: center;
   margin-left: 410px;
+  margin-top: 80px;
 }
 
 @keyframes typing {
