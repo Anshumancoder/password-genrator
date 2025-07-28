@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Password.css";
+import './Password.css';
 
 interface Props {
   view: "generate" | "stored";
@@ -14,6 +14,7 @@ const generatePassword = (length = 12): string => {
 const PasswordGenerator: React.FC<Props> = ({ view }) => {
   const [passwords, setPasswords] = useState<string[]>([]);
   const [newPassword, setNewPassword] = useState<string>("");
+  const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("passwords") || "[]");
@@ -23,6 +24,7 @@ const PasswordGenerator: React.FC<Props> = ({ view }) => {
   const handleGenerate = () => {
     const pwd = generatePassword();
     setNewPassword(pwd);
+    setCopied(false);
   };
 
   const handleSave = () => {
@@ -33,24 +35,52 @@ const PasswordGenerator: React.FC<Props> = ({ view }) => {
     setNewPassword("");
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(newPassword);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   if (view === "generate") {
     return (
-      <div className="bg-gray-900 p-6 rounded-xl shadow-xl max-w-md mx-auto text-center">
-        <button
-          id="generate-btn"
-          onClick={handleGenerate}
-          className="bg-indigo-500 px-4 py-2 rounded text-white mb-4 hover:bg-indigo-600"
-        >
-          Generate Password
-        </button>
+      <div className="bg-gray-900 p-6 rounded-xl shadow-xl max-w-md mx-auto text-center space-y-4">
+        <div className="relative flex items-center justify-center">
+          <input
+            type="text"
+            value={newPassword}
+            readOnly
+            className="w-full p-2 pr-10 rounded bg-gray-800 text-white font-mono border border-gray-700"
+            placeholder="Generated password will appear here"
+            id="password-input"
+          />
+          {newPassword && (
+            <button
+              onClick={handleCopy}
+              className="absolute right-2 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-full text-sm"
+              title="Copy to clipboard"
+              id="copy-btn"
+            >
+              📋
+            </button>
+          )}
+        </div>
 
-        <p className="mb-4 text-xl font-mono break-all">{newPassword}</p>
+        {copied && <p className="text-green-400 text-sm">Password copied to clipboard!</p>}
+
+        <button
+          onClick={handleGenerate}
+          className="generate-btn"
+          id="generate-btn"
+        >
+          <span>Generate Password</span>
+        </button>
 
         <button
           onClick={handleSave}
-          className="bg-green-600 px-4 py-2 rounded text-white hover:bg-green-700"
+          className="generate-btn"
+          id="save-btn"
         >
-          Save Password
+          <span>Save Password</span>
         </button>
       </div>
     );
@@ -58,7 +88,7 @@ const PasswordGenerator: React.FC<Props> = ({ view }) => {
 
   return (
     <div className="bg-gray-900 p-6 rounded-xl shadow-xl max-w-md mx-auto">
-      <h2 id='your-password' className="text-lg font-bold mb-4 text-center">Your Passwords</h2>
+      <h2 className="text-lg font-bold mb-4 text-center">Stored Passwords</h2>
       {passwords.length === 0 ? (
         <p className="text-gray-400 text-center">No passwords saved yet.</p>
       ) : (
