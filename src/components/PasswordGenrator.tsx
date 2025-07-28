@@ -60,7 +60,7 @@ const PasswordGenerator: React.FC<Props> = ({ view }) => {
               title="Copy to clipboard"
               id="copy-btn"
             >
-              📋
+                Copy
             </button>
           )}
         </div>
